@@ -1,4 +1,4 @@
 omo_food_bot.conf
-venv
-logs
+venv/
+logs/
 .env
