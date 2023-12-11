@@ -6,8 +6,11 @@ from os import getenv
 from aiogram import Bot, Dispatcher, Router, types
 from aiogram.enums import ParseMode
 from aiogram.filters import CommandStart
-from aiogram.types import Message
+from aiogram.types import Message,WebAppInfo
+# from aiogram.types.web_app_info import WebAppInfo
 from aiogram.utils.markdown import hbold
+from aiogram.types.menu_button_web_app import MenuButtonWebApp
+from aiogram.methods.set_chat_menu_button import SetChatMenuButton
 
 from dotenv import load_dotenv
 
@@ -17,6 +20,7 @@ TOKEN = getenv("BOT_TOKEN")
 
 # All handlers should be attached to the Router (or Dispatcher)
 dp = Dispatcher()
+web_site="https://omo-food.vercel.app/"
 
 
 @dp.message(CommandStart())
@@ -29,7 +33,12 @@ async def command_start_handler(message: Message) -> None:
     # and the target chat will be passed to :ref:`aiogram.methods.send_message.SendMessage`
     # method automatically or call API method directly via
     # Bot instance: `bot.send_message(chat_id=message.chat.id, ...)`
-    await message.answer(f"Hello, {hbold(message.from_user.full_name)}!")
+    await bot(SetChatMenuButton(menu_button=MenuButtonWebApp(
+        type="web_app",
+        text="Saytga kirish",
+        web_app=WebAppInfo(url=web_site)
+    )))
+    await message.answer(f"Assalomu aleykum, {hbold(message.from_user.full_name)}!\nSayt kirish uchun saytga kirish tugmasini bosing!")
 
 
 @dp.message()
@@ -46,13 +55,12 @@ async def echo_handler(message: types.Message) -> None:
         # But not all the types is supported to be copied so need to handle it
         await message.answer("Nice try!")
 
-
 async def main() -> None:
     # Initialize Bot instance with a default parse mode which will be passed to all API calls
+    global bot
     bot = Bot(TOKEN, parse_mode=ParseMode.HTML)
     # And the run events dispatching
     await dp.start_polling(bot)
-
 
 if __name__ == "__main__":
     logging.basicConfig(level=logging.INFO, stream=sys.stdout)
