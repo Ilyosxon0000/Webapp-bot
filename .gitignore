@@ -1,3 +1,4 @@
-./omo_food_bot.conf
-/venv
-/logs
+omo_food_bot.conf
+venv
+logs
+.env
