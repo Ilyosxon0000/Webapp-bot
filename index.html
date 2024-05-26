@@ -9,7 +9,10 @@
     <div id="app">
 
     </div>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+       document.getElementById("app").innerText+= window.location
+    </script>
+<!--     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
         let tg=window.Telegram.WebApp.initDataUnsafe;
         document.getElementById("app").innerText+=tg;
@@ -32,6 +35,6 @@
 
         // Append URL parameters to the content of the div
         document.getElementById("app").innerText += JSON.stringify(params);
-    </script>
+    </script> -->
 </body>
 </html>
